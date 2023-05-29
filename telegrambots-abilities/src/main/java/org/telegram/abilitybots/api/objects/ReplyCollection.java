@@ -1,6 +1,7 @@
 package org.telegram.abilitybots.api.objects;
 
-import java.util.Collection;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -12,21 +13,22 @@ import static com.google.common.collect.Lists.newArrayList;
  */
 public class ReplyCollection {
 
-    public final Collection<Reply> replies;
+    public final Collection<? extends Reply> replies;
 
-    public ReplyCollection(Collection<Reply> replies) {
+    public ReplyCollection(Collection<? extends Reply> replies) {
         this.replies = replies;
     }
 
-    public Collection<Reply> getReplies() {
+    public Collection<? extends Reply> getReplies() {
         return replies;
     }
 
-    public Stream<Reply> stream(){
-        return replies.stream();
+    public Stream<? extends Reply> stream() {
+        return replies.stream()
+                      .flatMap(Reply::stream);
     }
 
-    public static ReplyCollection of(Reply... replies){
+    public static <T extends Reply> ReplyCollection of(T... replies) {
         return new ReplyCollection(newArrayList(replies));
     }
 }

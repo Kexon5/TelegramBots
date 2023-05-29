@@ -234,7 +234,8 @@ public abstract class BaseAbilityBot extends DefaultAbsSender implements Ability
      * @param update the update received by Telegram's API
      */
     public void onUpdateReceived(Update update) {
-        log.info(format("[%s] New update [%s] received at %s", botUsername, update.getUpdateId(), now()));
+        Long chatId = getChatId(update);
+        log.info(format("[%s]{%s} New update [%s] received at %s", botUsername, chatId, update.getUpdateId(), now()));
         log.info(update.toString());
         long millisStarted = System.currentTimeMillis();
 
@@ -259,7 +260,8 @@ public abstract class BaseAbilityBot extends DefaultAbsSender implements Ability
         db.commit();
 
         long processingTime = System.currentTimeMillis() - millisStarted;
-        log.info(format("[%s] Processing of update [%s] ended at %s%n---> Processing time: [%d ms] <---%n", botUsername, update.getUpdateId(), now(), processingTime));
+        log.info(format("[%s]{%s} Processing of update [%s] ended at %s", botUsername, chatId, update.getUpdateId(), now()));
+        log.info(format("[%s]{%s} Processing time %d ms", botUsername, chatId, processingTime));
     }
 
     public String getBotUsername() {

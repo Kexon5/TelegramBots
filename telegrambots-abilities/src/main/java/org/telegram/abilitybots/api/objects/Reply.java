@@ -28,7 +28,7 @@ public class Reply {
   private boolean statsEnabled;
   private String name;
 
-  Reply(List<Predicate<Update>> conditions, BiConsumer<BaseAbilityBot, Update> action) {
+  public Reply(List<Predicate<Update>> conditions, BiConsumer<BaseAbilityBot, Update> action) {
     this.conditions = ImmutableList.<Predicate<Update>>builder()
             .addAll(conditions)
             .build();
@@ -36,7 +36,7 @@ public class Reply {
     statsEnabled = false;
   }
 
-  Reply(List<Predicate<Update>> conditions, BiConsumer<BaseAbilityBot, Update> action, String name) {
+  public Reply(List<Predicate<Update>> conditions, BiConsumer<BaseAbilityBot, Update> action, String name) {
     this(conditions, action);
     if (Objects.nonNull(name)) {
       enableStats(name);
